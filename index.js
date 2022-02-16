@@ -19,7 +19,6 @@ var body = req.body[0]
     process.env.REDIRECT_URI
   );
   const auth = await oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN});
-  const auth = await oAuth2Client.setCredentials({ refresh_token: '1//042BVhtvtloYZCgYIARAAGAQSNwF-L9IrmGLRJgc-MLPe-v4jOCqtPHs0lVsnPLqUW8qxrVMoEt84tNc_b9o_ieAJ1Qi5Dbkc2NM'});
   var gmail = google.gmail({version : 'v1', auth : oAuth2Client})
 
   if(entryArray.length >24999){
