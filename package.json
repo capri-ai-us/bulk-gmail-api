@@ -9,7 +9,6 @@
   "author": "quinton",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/functions-framework": "^1.7.1",
     "googleapis": "^95.0.0"
   }
 }
