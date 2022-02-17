@@ -8,6 +8,7 @@
      #### ACCESS_TOKEN
      #### ACCESS_TOKEN
      #### REFRESH_TOKEN
+     #### FROM_EMAIL
      
 
 ### Check out the full YouTube video here! 
