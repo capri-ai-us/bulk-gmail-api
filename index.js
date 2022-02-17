@@ -33,7 +33,7 @@ var body = req.body[0]
     for(i=0;i<entryArray.length;i++){
       try{
         const messageParts = [
-          'From: DaaS Blog<blogs@workwithdaas.com>',
+          'From: ' + process.env.FROM_EMAIL,
           'To: ' + entryArray[i],
           'Content-Type: text/html; charset=utf-8',
           'MIME-Version: 1.0',
