@@ -23,6 +23,9 @@ var body = req.body[0]
 
   if(entryArray.length >24999){
     //split up into smaller tasks and time out for another task in a few minutes to avoid passing the Gmail quota limits
+    // the base for this is splitting the total into batches of 5k and spreading them a few seconds apart to take advantage of Cloud Function's Serverless Characteristics
+    //you can change the base 5k to any interval you want to try and that works best for you
+  
     var project = process.env.PROJECT_ID; // Your GCP Project id
     var queue = process.env.TASK_QUEUE; // Name of your Queue
     var location = process.env.REGION; // The GCP region of your queue
