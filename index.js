@@ -23,6 +23,58 @@ var body = req.body[0]
 
   if(entryArray.length >24999){
     //split up into smaller tasks and time out for another task in a few minutes to avoid passing the Gmail quota limits
+    var project = process.env.PROJECT_ID; // Your GCP Project id
+    var queue = process.env.TASK_QUEUE; // Name of your Queue
+    var location = process.env.REGION; // The GCP region of your queue
+    var url = process.env.CLOUD_FUNCTION_URL; //use the cloud function trigger URL for this cloud func
+    var total = entryArray.length;
+    var batches = Math.round((total/5000) + 1);
+    const {CloudTasksClient} = require('@google-cloud/tasks');
+    // Instantiates a client.
+    const client = new CloudTasksClient();
+    const parent = client.queuePath(project, location, queue);
+     const cloudTask = {
+      httpRequest: {
+        httpMethod: 'POST',
+        headers : {
+          "content-type" : "application/json"
+        },
+        url,
+      },
+    };
+    for(b=0;b<batches;b++){
+      var start = (b * 5000);
+      var end = ((start + 5000) - 1)
+      if(start > entryArray.length -1){
+        break
+      }
+      if(end > entryArray.length -1 ){
+        end = entryArray.length -1
+      }
+      var chunk = entryArray.slice(start, end);
+      var payload = JSON.stringify({
+        'body' : [
+          {
+            to : [(chunk).toString()]
+          }
+        ]
+      }) // The task HTTP request body
+      var inSeconds = ((b*2) + 60)  // Delay in task execution
+      cloudTask.httpRequest.body = Buffer.from(payload).toString('base64');
+      cloudTask.scheduleTime = {
+        seconds: inSeconds + Date.now() / 1000,
+      };
+      console.log('Sending task:');
+    console.log(cloudTask);
+    try{
+      const request = {parent: parent, task: cloudTask};
+      const [response] = await client.createTask(request);
+      console.log(`Created task ${response.name}`);
+    }
+    catch(err){
+      console.log(err)
+    }
+  }  
   }
   else{
      //begin email body construction. Feel free to change out the subject directly in the code or by sending a different "Subject" request body parameter from the source (Integromat, Zapier, Etc.)
