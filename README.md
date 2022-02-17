@@ -9,6 +9,11 @@
      #### ACCESS_TOKEN
      #### REFRESH_TOKEN
      #### FROM_EMAIL
+     #### PROJECT_ID (only needed if using cloud tasks to separate large requests)
+     #### TASK_QUEUE (only needed if using cloud tasks to separate large requests)
+     #### REGION (only needed if using cloud tasks to separate large requests)
+     #### CLOUD_FUNCTION_URL (only needed if using cloud tasks to separate large requests)
+     
      
 
 ### Check out the full YouTube video here! 
