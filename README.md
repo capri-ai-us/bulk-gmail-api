@@ -12,3 +12,5 @@
      
 
 ### Check out the full YouTube video here! 
+
+## To use cloud tasks for distributing large lists of emails (>25k), select the "with-cloud-tasks" branch!
